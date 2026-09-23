@@ -103,12 +103,8 @@
         <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl art-glow"></div>
     </div>
 
-    <header class="relative z-10 w-full px-5 safe-padding-top flex justify-center items-center max-w-md mx-auto">
-        <!-- Minimal clean header without unnecessary status pill badges -->
-        <div class="w-8 h-8 rounded-xl bg-indigo-600/30 backdrop-blur-md flex items-center justify-center border border-indigo-400/20 shadow-inner">
-            <i class="fa-solid fa-sparkles text-indigo-300 text-xs"></i>
-        </div>
-    </header>
+    <!-- Безопасный отступ сверху для Dynamic Island без лишних элементов -->
+    <div class="w-full safe-padding-top"></div>
 
     <main class="relative z-10 flex-1 flex flex-col items-center justify-center p-4 max-w-md mx-auto w-full">
         
@@ -177,17 +173,18 @@
                 <h4 class="text-xs font-bold text-white text-center tracking-wide">Введите пароль для доступа</h4>
                 <div class="flex space-x-2">
                     <div class="relative flex-1">
-                        <input type="password" id="passwordInput" inputmode="numeric" pattern="[0-9]*" placeholder="Введите пароль..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 shadow-inner">
+                        <input type="password" id="passwordInput" inputmode="numeric" pattern="[0-9]*" placeholder="Введите пароль..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors shadow-inner">
                     </div>
-                    <button onclick="pasteFromClipboard()" class="bg-slate-800/90 hover:bg-slate-700 active:scale-95 border border-white/10 text-indigo-300 px-4 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition-all shadow-md" title="Вставить из буфера">
+                    <button type="button" onclick="pasteFromClipboard()" class="bg-indigo-600/30 hover:bg-indigo-600/50 active:scale-95 border border-indigo-400/30 text-indigo-200 px-4 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition-all shadow-md" title="Вставить из буфера">
                         <i class="fa-solid fa-paste"></i>
-                        <span class="hidden sm:inline">Вставить</span>
+                        <span>Вставить</span>
                     </button>
                 </div>
                 <button onclick="checkPassword()" class="play-btn w-full py-3.5 rounded-xl text-white font-bold text-xs shadow-lg flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-key text-[10px]"></i>
                     <span>Проверить пароль</span>
                 </button>
+                <p id="pasteHint" class="text-[11px] text-amber-300 text-center hidden font-medium">Зажмите поле ввода и нажмите «Вставить»</p>
                 <p id="errorMsg" class="text-[11px] text-rose-400 text-center hidden font-medium">Неверный пароль (тест: 1234)</p>
             </div>
 
@@ -336,36 +333,33 @@
             }, 300);
         }
 
-        // Robust clipboard pasting mechanism compatible with iOS Safari
+        // Оптимизированная вставка для Safari iOS без потери transient user gesture
         async function pasteFromClipboard() {
             const inputField = document.getElementById('passwordInput');
-            inputField.focus();
-            
+            const pasteHint = document.getElementById('pasteHint');
+            if (pasteHint) pasteHint.classList.add('hidden');
+
             try {
-                if (navigator.clipboard && navigator.clipboard.readText) {
+                // В Safari iOS readText ДОЛЖЕН вызываться строго синхронно в момент тапа
+                if (navigator.clipboard && typeof navigator.clipboard.readText === 'function') {
                     const text = await navigator.clipboard.readText();
-                    if (text) {
+                    if (text && text.trim().length > 0) {
                         inputField.value = text.trim();
+                        // Зеленая подсветка успешной вставки
+                        inputField.classList.add('border-emerald-500', 'bg-emerald-950/40');
+                        setTimeout(() => {
+                            inputField.classList.remove('border-emerald-500', 'bg-emerald-950/40');
+                        }, 700);
                         return;
                     }
                 }
-                throw new Error('Clipboard API unavailable or restricted');
+                throw new Error('Clipboard API unavailable or empty');
             } catch (err) {
-                // Fallback for Safari security restrictions: prompt paste action
-                try {
-                    const pasted = await window.navigator.clipboard.readText();
-                    if (pasted) {
-                        inputField.value = pasted.trim();
-                        return;
-                    }
-                } catch (e) {
-                    // Visual assistance: highlight input and guide user to native iOS paste bubble
-                    inputField.placeholder = "Удерживайте поле для вставки...";
-                    inputField.classList.add('border-indigo-400');
-                    setTimeout(() => {
-                        inputField.placeholder = "Введите пароль...";
-                        inputField.classList.remove('border-indigo-400');
-                    }, 3000);
+                // Если Safari блокирует авто-чтение (например, в окне предпросмотра без HTTPS)
+                inputField.focus();
+                if (pasteHint) {
+                    pasteHint.classList.remove('hidden');
+                    setTimeout(() => pasteHint.classList.add('hidden'), 4000);
                 }
             }
         }
