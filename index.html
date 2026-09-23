@@ -3,337 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Интерактивный Квест</title>
-    <!-- Tailwind CSS for modern responsive styling -->
+    <title>Sanctum of Light Quest</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts Inter & Cinzel for Divine Fantasy Aesthetic -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Cinzel & Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { 
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
+        /* Base typography & resets */
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            overscroll-behavior-y: none;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .divine-font {
-            font-family: 'Cinzel', serif;
-        }
-        
-        .safe-padding-top {
-            padding-top: max(1.2rem, env(safe-area-inset-top));
-        }
-        .safe-padding-bottom {
-            padding-bottom: max(1.8rem, env(safe-area-inset-bottom));
+            font-family: 'Cinzel', Georgia, serif;
+            letter-spacing: 0.05em;
         }
 
+        /* Safe area support for iPhone dynamic island and bottom bar */
+        .safe-pt {
+            padding-top: max(env(safe-area-inset-top, 20px), 20px);
+        }
+        .safe-pb {
+            padding-bottom: max(env(safe-area-inset-bottom, 20px), 24px);
+        }
+
+        /* Deluxe Celestial Panels - Wide, velvety golden frames */
         .celestial-panel {
-            background: linear-gradient(145deg, rgba(26, 23, 33, 0.85) 0%, rgba(13, 11, 18, 0.94) 100%);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(245, 197, 66, 0.28);
-            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.18), 0 0 25px rgba(245, 197, 66, 0.12);
-            border-radius: 2rem;
-        }
-
-        .celestial-card {
-            background: linear-gradient(135deg, rgba(38, 32, 45, 0.65) 0%, rgba(15, 13, 20, 0.88) 100%);
+            background: rgba(11, 16, 32, 0.88);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(245, 197, 66, 0.22);
-            box-shadow: 0 14px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.22);
-            border-radius: 2rem;
-        }
-        
-        .telegram-btn {
-            background: linear-gradient(145deg, rgba(35, 30, 45, 0.8) 0%, rgba(18, 15, 25, 0.92) 100%);
-            border: 1px solid rgba(245, 197, 66, 0.2);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .telegram-btn:active {
-            transform: scale(0.97);
-            background: rgba(245, 197, 66, 0.15);
-            border-color: rgba(253, 224, 71, 0.5);
+            border: 2px solid rgba(245, 197, 66, 0.45);
+            box-shadow: 
+                0 16px 36px -10px rgba(0, 0, 0, 0.8),
+                inset 0 0 20px rgba(245, 197, 66, 0.08),
+                0 0 15px rgba(245, 197, 66, 0.15);
+            border-radius: 1.75rem;
         }
 
+        /* Celestial Card with wide rim */
+        .celestial-card {
+            border: 2.5px solid rgba(245, 197, 66, 0.4);
+            box-shadow: 
+                0 16px 32px rgba(0, 0, 0, 0.75),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Primary Divine Button (Gold) */
         .celestial-btn {
-            background: linear-gradient(135deg, #fde047 0%, #eab308 50%, #ca8a04 100%);
-            color: #1c1917;
-            font-weight: 700;
-            box-shadow: 0 12px 30px -6px rgba(234, 179, 8, 0.55), inset 0 1px 2px rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(254, 240, 138, 0.8);
-            border-radius: 1.5rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%);
+            border: 2px solid rgba(254, 240, 138, 0.8);
+            box-shadow: 
+                0 8px 24px rgba(217, 119, 6, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            border-radius: 1.25rem;
+            transition: transform 0.12s ease, filter 0.12s ease;
         }
-
         .celestial-btn:active {
             transform: scale(0.96);
-            filter: brightness(0.92);
-            box-shadow: 0 6px 16px -3px rgba(234, 179, 8, 0.4);
+            filter: brightness(0.9);
         }
 
-        .numpad-key {
-            background: linear-gradient(145deg, rgba(35, 30, 45, 0.85) 0%, rgba(18, 15, 25, 0.96) 100%);
-            border: 1px solid rgba(245, 197, 66, 0.22);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            touch-action: manipulation;
-            user-select: none;
-            -webkit-user-select: none;
+        /* Secondary Divine Action Button */
+        .celestial-btn-secondary {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(245, 197, 66, 0.35);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
             border-radius: 1.25rem;
-            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.12s ease, border-color 0.12s ease;
+        }
+        .celestial-btn-secondary:active {
+            transform: scale(0.96);
+            border-color: rgba(245, 197, 66, 0.7);
         }
 
-        .numpad-key:active {
-            transform: scale(0.92);
-            background: rgba(245, 197, 66, 0.25);
-            border-color: rgba(253, 224, 71, 0.7);
-            box-shadow: 0 0 20px rgba(245, 197, 66, 0.5);
+        /* 8-Digit Code Slot */
+        .pin-slot {
+            aspect-ratio: 1;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid rgba(245, 197, 66, 0.3);
+            border-radius: 0.75rem;
+            transition: all 0.2s ease;
         }
-
-        .pin-cell {
-            background: rgba(18, 15, 25, 0.9);
-            border: 1.5px solid rgba(245, 197, 66, 0.35);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 0 12px rgba(245, 197, 66, 0.1);
-            border-radius: 0.9rem;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .pin-cell.active {
+        .pin-slot.filled {
             border-color: #fde047;
             background: rgba(245, 197, 66, 0.15);
-            box-shadow: 0 0 18px rgba(245, 197, 66, 0.6), inset 0 1px 3px rgba(253, 224, 71, 0.5);
-            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(245, 197, 66, 0.35);
         }
 
-        .shake-error {
-            animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        /* Numeric Keypad Buttons */
+        .key-btn {
+            background: rgba(18, 25, 45, 0.85);
+            border: 2px solid rgba(245, 197, 66, 0.25);
+            border-radius: 1.25rem;
+            transition: all 0.1s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+        }
+        .key-btn:active {
+            transform: scale(0.92);
+            background: rgba(245, 197, 66, 0.25);
+            border-color: #fde047;
         }
 
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-2px, 0, 0); }
-            20%, 80% { transform: translate3d(4px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-            40%, 60% { transform: translate3d(6px, 0, 0); }
+        /* Error Shake Animation */
+        @keyframes divineShake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
         }
-
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.35; transform: scale(1); }
-            50% { opacity: 0.65; transform: scale(1.08); }
-        }
-        .art-glow {
-            animation: pulseGlow 8s infinite ease-in-out;
-        }
-
-        @media screen and (max-width: 768px) {
-            input[type="password"], input[type="text"] {
-                font-size: 16px !important;
-            }
+        .shake {
+            animation: divineShake 0.4s ease-in-out;
         }
     </style>
 </head>
-<body class="h-full bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden selection:bg-amber-500 selection:text-slate-950">
+<body class="bg-slate-950 text-slate-100 min-h-full flex flex-col justify-between overflow-x-hidden relative">
 
-    <div id="artContainer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <!-- Default Art 1 -->
-        <div id="art1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-100 scale-105" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/30"></div>
-        </div>
-        <!-- Art 2 -->
-        <div id="art2" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/30"></div>
-        </div>
-        <!-- Art 3 -->
-        <div id="art3" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-slate-950/30"></div>
-        </div>
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl art-glow"></div>
+    <!-- DYNAMIC BACKGROUND ART -->
+    <div id="artContainer" class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <!-- Page 1 Background -->
+        <div id="art1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-100 scale-105" 
+             style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg'); filter: brightness(0.4) saturate(1.2);"></div>
+        <!-- Page 2 Background -->
+        <div id="art2" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-105" 
+             style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg'); filter: brightness(0.35) saturate(1.2);"></div>
+        <!-- Page 3 Background -->
+        <div id="art3" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-105" 
+             style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_01.jpg'); filter: brightness(0.35) saturate(1.2);"></div>
+        
+        <!-- Vignette & Warm Halo Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(245,197,66,0.12)_0%,_transparent_70%)]"></div>
     </div>
 
-    <div class="w-full safe-padding-top"></div>
+    <!-- MAIN INTERACTIVE CONTAINER -->
+    <main class="relative z-10 w-full max-w-md mx-auto flex-1 flex flex-col justify-between px-5 safe-pt safe-pb">
 
-    <main class="relative z-10 flex-1 flex flex-col items-center justify-center p-4 max-w-md mx-auto w-full">
-        
-        <!-- PAGE 1: Start Screen (Vertical Art -> Text -> Play Button) -->
+        <!-- ========================================== -->
+        <!-- PAGE 1: Welcome & Vertical Hero Art        -->
+        <!-- ========================================== -->
         <div id="page1" class="w-full flex flex-col space-y-4 transition-all duration-300">
-            <!-- Top Vertical Art Box -->
-            <div class="celestial-card w-full h-[380px] sm:h-[420px] overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center group" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
-                <div class="relative z-10">
-                    <span class="px-3 py-1 bg-amber-500/25 backdrop-blur-md text-amber-200 text-[10px] font-bold rounded-full border border-amber-400/40 shadow-sm divine-font tracking-wider">
-                        <i class="fa-solid fa-crown mr-1 text-amber-300"></i> Sanctum of Light
+            <!-- 1. Vertical Art Card -->
+            <div class="celestial-card w-full h-[370px] sm:h-[420px] rounded-3xl overflow-hidden relative shadow-2xl bg-cover bg-center" 
+                 style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-5 right-5 flex items-center justify-between">
+                    <span class="px-3.5 py-1 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-400/40 text-amber-200 text-xs divine-font font-bold">
+                        <i class="fa-solid fa-sparkles mr-1 text-amber-300"></i> Sanctum of Light
                     </span>
-                    <h3 class="text-white divine-font font-bold text-base mt-2 drop-shadow-md">Визуальная галерея</h3>
                 </div>
             </div>
 
-            <!-- Middle Text Box -->
-            <div class="celestial-panel w-full p-6 text-center">
-                <p class="text-xs text-amber-100/90 leading-relaxed font-medium">
+            <!-- 2. Text Box -->
+            <div class="celestial-panel w-full p-5 text-center">
+                <h1 class="text-xl divine-font font-bold text-amber-200 tracking-wide drop-shadow-sm">
                     Добро пожаловать в игру!
+                </h1>
+                <p class="text-xs text-slate-300 font-medium leading-relaxed mt-2">
+                    Пройдите через врата света, разгадайте секретный пароль и получите доступ к особым праздничным наградам.
                 </p>
             </div>
 
-            <!-- Bottom Big Play Button -->
-            <button onclick="goToPage2()" class="celestial-btn w-full py-4 text-xs divine-font tracking-wider shadow-xl flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-play text-xs text-stone-900"></i>
-                <span class="text-stone-900 font-extrabold text-sm">Играть!</span>
+            <!-- 3. Big Action Button -->
+            <button onclick="goToPage2()" class="celestial-btn w-full py-4 text-base divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2.5">
+                <span>Играть!</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
         </div>
 
-        <!-- PAGE 2: Menu, Instruction & PIN Keypad Screen -->
-        <div id="page2" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
-            <!-- Top Text Box instead of Art -->
-            <div class="celestial-panel w-full p-5 text-center">
-                <h3 class="text-white divine-font font-bold text-sm tracking-wide">Главное меню</h3>
-                <p class="text-[11px] text-amber-200/80 mt-1">Выберите пункт или введите секретный код</p>
+        <!-- ========================================== -->
+        <!-- PAGE 2: Code Entry, Menu & NumPad          -->
+        <!-- ========================================== -->
+        <div id="page2" class="w-full flex flex-col space-y-3.5 hidden opacity-0 transition-all duration-300">
+            <!-- Top Clean Text Box -->
+            <div class="celestial-panel w-full p-4 text-center">
+                <h2 class="text-sm divine-font font-bold text-amber-200 tracking-wide">
+                    Введите секретный код
+                </h2>
+                <p class="text-[11px] text-slate-300 leading-snug mt-1 font-medium">
+                    Наберите 8 цифр на панели для перехода к подарку
+                </p>
             </div>
 
-            <!-- Telegram Inline Buttons -->
-            <div class="space-y-2.5">
-                <button onclick="openInstructions()" class="telegram-btn w-full p-4 text-xs font-medium flex items-center justify-between text-left">
-                    <span class="flex items-center space-x-3.5">
-                        <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs border border-amber-500/30 shadow-inner">
-                            <i class="fa-solid fa-book-open"></i>
-                        </span>
-                        <span class="text-white divine-font font-medium">Полная инструкция</span>
-                    </span>
-                    <i class="fa-solid fa-chevron-right text-amber-400/70 text-[10px]"></i>
+            <!-- Navigation Buttons (Instruction & Install) -->
+            <div class="grid grid-cols-2 gap-2.5 w-full">
+                <button onclick="openInstructions()" class="celestial-btn-secondary py-3 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-scroll text-amber-400"></i>
+                    <span>Инструкция</span>
                 </button>
-
-                <a href="https://t.me" target="_blank" class="telegram-btn w-full p-4 text-xs font-medium flex items-center justify-between text-left block">
-                    <span class="flex items-center space-x-3.5">
-                        <span class="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-300 flex items-center justify-center text-xs border border-sky-500/30 shadow-inner">
-                            <i class="fa-solid fa-download"></i>
-                        </span>
-                        <span class="text-white divine-font font-medium">Установить игру</span>
-                    </span>
-                    <i class="fa-solid fa-chevron-right text-amber-400/70 text-[10px]"></i>
+                <a href="https://t.me" target="_blank" class="celestial-btn-secondary py-3 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-download text-amber-400"></i>
+                    <span>Установить игру</span>
                 </a>
             </div>
 
-            <!-- Password / PIN Keypad Section -->
-            <div id="pinBoxCard" class="celestial-panel w-full p-5 space-y-4">
-                <div class="text-center space-y-1">
-                    <h4 class="text-xs divine-font font-bold text-amber-200 tracking-wide">Введите пароль для доступа</h4>
+            <!-- 8 Visible Digit Slots -->
+            <div id="pinBox" class="celestial-panel w-full p-4 flex flex-col items-center">
+                <div class="grid grid-cols-8 gap-1.5 w-full">
+                    <div id="slot0" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot1" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot2" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot3" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot4" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot5" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot6" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot7" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
                 </div>
-
-                <!-- 8 Visible Digit Cells Container -->
-                <div id="pinCellsContainer" class="grid grid-cols-8 gap-1.5 py-1 max-w-[320px] mx-auto">
-                    <div id="cell0" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell1" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell2" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell3" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell4" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell5" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell6" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                    <div id="cell7" class="pin-cell h-10 flex items-center justify-center text-sm font-bold text-amber-300 divine-font"></div>
-                </div>
-
-                <!-- Ergonomic NumPad Grid (3 x 4 with centered 0) -->
-                <div class="grid grid-cols-3 gap-2.5 max-w-[260px] mx-auto pt-1">
-                    <button type="button" onclick="handlePinInput('1')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">1</button>
-                    <button type="button" onclick="handlePinInput('2')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">2</button>
-                    <button type="button" onclick="handlePinInput('3')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">3</button>
-
-                    <button type="button" onclick="handlePinInput('4')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">4</button>
-                    <button type="button" onclick="handlePinInput('5')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">5</button>
-                    <button type="button" onclick="handlePinInput('6')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">6</button>
-
-                    <button type="button" onclick="handlePinInput('7')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">7</button>
-                    <button type="button" onclick="handlePinInput('8')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">8</button>
-                    <button type="button" onclick="handlePinInput('9')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">9</button>
-
-                    <div></div>
-                    <button type="button" onclick="handlePinInput('0')" class="numpad-key h-12 flex items-center justify-center text-lg font-bold text-amber-200 divine-font">0</button>
-                    <div></div>
-                </div>
-
-                <!-- Verify Button -->
-                <button onclick="checkPassword()" class="celestial-btn w-full py-3.5 text-xs divine-font tracking-wider shadow-lg flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-key text-[10px] text-stone-900"></i>
-                    <span class="text-stone-900 font-extrabold">Проверить пароль</span>
-                </button>
-
-                <!-- Feedback Message -->
-                <p id="errorMsg" class="text-[11px] text-rose-400 text-center hidden font-medium">Неверный пароль (тест: 11111111)</p>
             </div>
 
-            <button onclick="goToPage1()" class="w-full py-3 rounded-2xl bg-slate-900/40 text-amber-200/70 text-xs font-semibold hover:bg-slate-800/60 border border-amber-500/10 transition-all divine-font">
-                <i class="fa-solid fa-arrow-left mr-1.5"></i> На главную
-            </button>
+            <!-- iOS Safari Optimized Keypad (1 to 0 centered) -->
+            <div class="w-full grid grid-cols-3 gap-2 pt-1">
+                <button onclick="pressDigit('1')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">1</button>
+                <button onclick="pressDigit('2')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">2</button>
+                <button onclick="pressDigit('3')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">3</button>
+
+                <button onclick="pressDigit('4')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">4</button>
+                <button onclick="pressDigit('5')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">5</button>
+                <button onclick="pressDigit('6')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">6</button>
+
+                <button onclick="pressDigit('7')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">7</button>
+                <button onclick="pressDigit('8')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">8</button>
+                <button onclick="pressDigit('9')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">9</button>
+
+                <!-- Zero Key Centered -->
+                <button onclick="pressDigit('0')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100 col-start-2">0</button>
+            </div>
         </div>
 
-        <!-- SUB-PAGE: Full Instructions -->
-        <div id="pageInstruction" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
-            <div class="celestial-card w-full h-48 overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+        <!-- ========================================== -->
+        <!-- SUB-PAGE: Full Instructions                -->
+        <!-- ========================================== -->
+        <div id="pageInstruction" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-all duration-300">
+            <div class="celestial-card w-full h-48 rounded-3xl overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" 
+                 style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
                 <div class="relative z-10">
-                    <span class="px-3 py-1 bg-amber-500/25 backdrop-blur-md text-amber-200 text-[10px] font-bold rounded-full border border-amber-400/40 shadow-sm divine-font">
-                        <i class="fa-solid fa-info-circle mr-1"></i> Справка
+                    <span class="px-3 py-1 bg-amber-500/25 backdrop-blur-md text-amber-200 text-[10px] font-bold rounded-full border border-amber-400/40 divine-font">
+                        Справка
                     </span>
-                    <h3 class="text-white divine-font font-bold text-sm mt-1.5">Правила и руководство</h3>
+                    <h3 class="text-white divine-font font-bold text-base mt-2">Руководство квеста</h3>
                 </div>
             </div>
 
-            <div class="celestial-panel w-full p-6 space-y-2.5">
-                <h4 class="text-xs divine-font font-bold text-amber-300 tracking-wide">Инструкция по прохождению:</h4>
-                <p class="text-[11px] text-amber-100/90 leading-relaxed font-medium">
-                    1. Нажмите «Играть» для перехода в меню.<br>
-                    2. Введите 8-значный секретный пароль на цифровой панели.<br>
-                    3. При верном пароле откроется страница с вашими эксклюзивными ссылками.
+            <div class="celestial-panel w-full p-5 space-y-2">
+                <h4 class="text-xs divine-font font-bold text-amber-300 tracking-wide">Правила прохождения:</h4>
+                <p class="text-xs text-slate-300 leading-relaxed font-medium">
+                    1. Нажмите «Играть» для перехода к экрану ввода кода.<br>
+                    2. Введите секретный 8-значный пароль на клавиатуре.<br>
+                    3. При правильном коде откроется страница с подарками и ссылками.
                 </p>
             </div>
 
-            <button onclick="closeInstructions()" class="celestial-btn w-full py-4 text-xs divine-font tracking-wider shadow-xl flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-arrow-left text-xs text-stone-900"></i>
-                <span class="text-stone-900 font-extrabold">Назад в меню</span>
+            <button onclick="closeInstructions()" class="celestial-btn w-full py-4 text-xs divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Назад в меню</span>
             </button>
         </div>
 
-        <!-- PAGE 3: Victory Page with exact requested top-to-bottom order -->
-        <div id="page3" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
-            
-            <!-- 1. Top Image Link Button 1 -->
-            <a href="https://t.me" target="_blank" class="group relative h-36 w-full rounded-[2rem] overflow-hidden celestial-card border border-amber-500/30 block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent group-hover:bg-slate-950/65 transition-colors"></div>
-                <div class="absolute inset-0 p-5 flex flex-col justify-end">
-                    <div class="flex items-center space-x-3.5">
-                        <div class="w-10 h-10 rounded-2xl bg-amber-500/90 backdrop-blur-md text-stone-900 flex items-center justify-center shadow-lg border border-amber-200/50">
-                            <i class="fa-solid fa-brands fa-telegram text-base font-bold"></i>
-                        </div>
-                        <div>
-                            <span class="text-xs divine-font font-bold text-white block">Канал / Ссылка 1</span>
-                            <span class="text-[10px] text-amber-200/80 font-medium">Нажмите для перехода</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- ========================================== -->
+        <!-- PAGE 3: Birthday Celebration & Links       -->
+        <!-- ========================================== -->
+        <div id="page3" class="w-full flex flex-col space-y-3.5 hidden opacity-0 transition-all duration-300">
+            <!-- Birthday Congratulations Banner -->
+            <div class="celestial-panel w-full p-3.5 text-center">
+                <h2 class="text-lg divine-font font-bold text-amber-300 tracking-wider">
+                    <i class="fa-solid fa-crown mr-2 text-amber-400"></i>С Днём Рождения!
+                </h2>
+            </div>
+
+            <!-- Top Image Card Block (WU_01.jpg) - Strict 16:9 Aspect Ratio -->
+            <a href="https://t.me" target="_blank" 
+               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" 
+               style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_01.jpg');">
             </a>
 
-            <!-- 2. Image Link Button 2 -->
-            <a href="https://github.com" target="_blank" class="group relative h-36 w-full rounded-[2rem] overflow-hidden celestial-card border border-amber-500/30 block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent group-hover:bg-slate-950/65 transition-colors"></div>
-                <div class="absolute inset-0 p-5 flex flex-col justify-end">
-                    <div class="flex items-center space-x-3.5">
-                        <div class="w-10 h-10 rounded-2xl bg-amber-500/90 backdrop-blur-md text-stone-900 flex items-center justify-center shadow-lg border border-amber-200/50">
-                            <i class="fa-solid fa-code text-sm font-bold"></i>
-                        </div>
-                        <div>
-                            <span class="text-xs divine-font font-bold text-white block">Ресурс / Ссылка 2</span>
-                            <span class="text-[10px] text-amber-200/80 font-medium">Нажмите для перехода</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Lower Image Card Block (WU_02.jpg) - Strict 16:9 Aspect Ratio -->
+            <a href="https://github.com" target="_blank" 
+               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" 
+               style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_02.jpg');">
             </a>
 
-            <!-- 3. Start Over Button -->
-            <button onclick="goToPage1()" class="w-full py-4 rounded-[1.5rem] bg-slate-900/90 hover:bg-slate-800 text-amber-200 text-xs divine-font font-bold shadow-xl border border-amber-500/20 transition-transform active:scale-95 flex items-center justify-center space-x-2">
+            <!-- Start Over Button -->
+            <button onclick="goToPage1()" class="celestial-btn-secondary w-full py-3.5 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-rotate-right text-xs"></i>
                 <span>Начать сначала</span>
             </button>
@@ -341,144 +298,114 @@
 
     </main>
 
-    <footer class="relative z-10 w-full px-5 safe-padding-bottom text-center text-[10px] text-amber-200/70 divine-font font-medium tracking-widest">
-        Лучшему игроку
-    </footer>
-
+    <!-- LOGIC SCRIPT -->
     <script>
+        const CORRECT_PASSWORD = '11111111'; // Тестовый 8-значный пароль
         let currentPin = '';
-        const TARGET_PASSWORD = '11111111';
 
-        function updatePinDisplay() {
-            for (let i = 0; i < 8; i++) {
-                const cell = document.getElementById(`cell${i}`);
-                if (cell) {
-                    if (i < currentPin.length) {
-                        cell.textContent = currentPin[i];
-                        cell.classList.add('active');
-                    } else {
-                        cell.textContent = '';
-                        cell.classList.remove('active');
-                    }
-                }
-            }
-        }
+        // Elements
+        const p1 = document.getElementById('page1');
+        const p2 = document.getElementById('page2');
+        const p3 = document.getElementById('page3');
+        const pInst = document.getElementById('pageInstruction');
 
-        function handlePinInput(digit) {
-            const errorMsg = document.getElementById('errorMsg');
-            if (errorMsg) errorMsg.classList.add('hidden');
+        const art1 = document.getElementById('art1');
+        const art2 = document.getElementById('art2');
+        const art3 = document.getElementById('art3');
 
-            if (currentPin.length < 8) {
-                currentPin += digit;
-                updatePinDisplay();
-
-                if (currentPin.length === 8) {
-                    setTimeout(() => {
-                        checkPassword();
-                    }, 150);
-                }
-            }
-        }
-
-        function resetPin() {
+        // Navigation Functions
+        function goToPage1() {
             currentPin = '';
-            updatePinDisplay();
-            const errorMsg = document.getElementById('errorMsg');
-            if (errorMsg) errorMsg.classList.add('hidden');
-        }
-
-        function setArt(artNumber) {
-            document.getElementById('art1').style.opacity = artNumber === 1 ? '1' : '0';
-            document.getElementById('art2').style.opacity = artNumber === 2 ? '1' : '0';
-            document.getElementById('art3').style.opacity = artNumber === 3 ? '1' : '0';
+            updatePinUI();
+            switchScreen(p1);
+            showArt(art1);
         }
 
         function goToPage2() {
-            const p1 = document.getElementById('page1');
-            const p2 = document.getElementById('page2');
-            
-            resetPin();
-            setArt(2);
-            p1.classList.add('opacity-0');
-            setTimeout(() => {
-                p1.classList.add('hidden');
-                p2.classList.remove('hidden');
-                setTimeout(() => p2.classList.remove('opacity-0'), 20);
-            }, 300);
-        }
-
-        function goToPage1() {
-            const p2 = document.getElementById('page2');
-            const p3 = document.getElementById('page3');
-            const p1 = document.getElementById('page1');
-            
-            resetPin();
-            setArt(1);
-            p2.classList.add('opacity-0');
-            p3.classList.add('opacity-0');
-            setTimeout(() => {
-                p2.classList.add('hidden');
-                p3.classList.add('hidden');
-                p1.classList.remove('hidden');
-                setTimeout(() => p1.classList.remove('opacity-0'), 20);
-            }, 300);
-        }
-
-        function openInstructions() {
-            const p2 = document.getElementById('page2');
-            const pi = document.getElementById('pageInstruction');
-            
-            p2.classList.add('opacity-0');
-            setTimeout(() => {
-                p2.classList.add('hidden');
-                pi.classList.remove('hidden');
-                setTimeout(() => pi.classList.remove('opacity-0'), 20);
-            }, 300);
-        }
-
-        function closeInstructions() {
-            const p2 = document.getElementById('page2');
-            const pi = document.getElementById('pageInstruction');
-            
-            pi.classList.add('opacity-0');
-            setTimeout(() => {
-                pi.classList.add('hidden');
-                p2.classList.remove('hidden');
-                setTimeout(() => p2.classList.remove('opacity-0'), 20);
-            }, 300);
-        }
-
-        function checkPassword() {
-            const errorMsg = document.getElementById('errorMsg');
-            const pinCard = document.getElementById('pinBoxCard');
-            
-            if (currentPin === TARGET_PASSWORD) {
-                if (errorMsg) errorMsg.classList.add('hidden');
-                goToPage3();
-            } else {
-                if (errorMsg) errorMsg.classList.remove('hidden');
-                if (pinCard) {
-                    pinCard.classList.add('shake-error');
-                    setTimeout(() => pinCard.classList.remove('shake-error'), 500);
-                }
-                setTimeout(() => {
-                    currentPin = '';
-                    updatePinDisplay();
-                }, 400);
-            }
+            switchScreen(p2);
+            showArt(art2);
         }
 
         function goToPage3() {
-            const p2 = document.getElementById('page2');
-            const p3 = document.getElementById('page3');
-            
-            setArt(3);
-            p2.classList.add('opacity-0');
+            switchScreen(p3);
+            showArt(art3);
+        }
+
+        function openInstructions() {
+            p2.classList.add('hidden');
+            pInst.classList.remove('hidden');
             setTimeout(() => {
-                p2.classList.add('hidden');
-                p3.classList.remove('hidden');
-                setTimeout(() => p3.classList.remove('opacity-0'), 20);
-            }, 300);
+                pInst.classList.remove('opacity-0');
+            }, 20);
+        }
+
+        function closeInstructions() {
+            pInst.classList.add('opacity-0');
+            setTimeout(() => {
+                pInst.classList.add('hidden');
+                p2.classList.remove('hidden');
+                p2.classList.remove('opacity-0');
+            }, 250);
+        }
+
+        function switchScreen(target) {
+            [p1, p2, p3, pInst].forEach(page => {
+                page.classList.add('opacity-0');
+                setTimeout(() => page.classList.add('hidden'), 250);
+            });
+            setTimeout(() => {
+                target.classList.remove('hidden');
+                setTimeout(() => target.classList.remove('opacity-0'), 20);
+            }, 260);
+        }
+
+        function showArt(targetArt) {
+            [art1, art2, art3].forEach(art => {
+                art.classList.remove('opacity-100');
+                art.classList.add('opacity-0');
+            });
+            targetArt.classList.remove('opacity-0');
+            targetArt.classList.add('opacity-100');
+        }
+
+        // Keypad Input Logic
+        function pressDigit(digit) {
+            if (currentPin.length < 8) {
+                currentPin += digit;
+                updatePinUI();
+
+                // Auto-verify on 8th digit
+                if (currentPin.length === 8) {
+                    setTimeout(verifyPin, 180);
+                }
+            }
+        }
+
+        function updatePinUI() {
+            for (let i = 0; i < 8; i++) {
+                const slot = document.getElementById('slot' + i);
+                if (i < currentPin.length) {
+                    slot.textContent = currentPin[i];
+                    slot.classList.add('filled');
+                } else {
+                    slot.textContent = '-';
+                    slot.classList.remove('filled');
+                }
+            }
+        }
+
+        function verifyPin() {
+            const pinBox = document.getElementById('pinBox');
+            if (currentPin === CORRECT_PASSWORD) {
+                goToPage3();
+            } else {
+                pinBox.classList.add('shake');
+                setTimeout(() => {
+                    pinBox.classList.remove('shake');
+                    currentPin = '';
+                    updatePinUI();
+                }, 500);
+            }
         }
     </script>
 </body>
