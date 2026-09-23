@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Интерактивный Арт Квест</title>
+    <title>Интерактивный Квест</title>
     <!-- Tailwind CSS for modern responsive styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400,500,600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -21,34 +21,47 @@
         }
         
         .safe-padding-top {
-            padding-top: max(1.5rem, env(safe-area-inset-top));
+            padding-top: max(1rem, env(safe-area-inset-top));
         }
         .safe-padding-bottom {
             padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
         }
 
+        /* Modern Refined Glassmorphism */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.78);
+            background: rgba(13, 18, 30, 0.65);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
         }
         
         .telegram-btn {
-            background: rgba(30, 41, 59, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            transition: transform 0.15s ease, background-color 0.2s ease;
+            background: rgba(30, 41, 59, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .telegram-btn:active {
             transform: scale(0.97);
-            background: rgba(51, 65, 85, 0.95);
+            background: rgba(51, 65, 85, 0.9);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .play-btn {
             background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            transition: transform 0.15s ease, filter 0.2s ease;
-            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px -8px rgba(99, 102, 241, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .play-btn:active {
@@ -57,8 +70,8 @@
         }
 
         @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.08); }
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.06); }
         }
         .art-glow {
             animation: pulseGlow 8s infinite ease-in-out;
@@ -72,37 +85,28 @@
         }
     </style>
 </head>
-<body class="h-full bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden">
+<body class="h-full bg-slate-950 text-slate-100 flex flex-col justify-between overflow-x-hidden selection:bg-indigo-500 selection:text-white">
 
     <div id="artContainer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <!-- Default Art 1 -->
         <div id="art1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-100 scale-105" style="background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1920&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
         </div>
         <!-- Art 2 (Instruction / Password Page) -->
         <div id="art2" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
         </div>
         <!-- Art 3 (Victory Page) -->
         <div id="art3" class="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-0 scale-105" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1920&auto=format&fit=crop');">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20"></div>
         </div>
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl art-glow"></div>
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl art-glow"></div>
     </div>
 
-    <header class="relative z-10 w-full px-5 safe-padding-top flex justify-between items-center max-w-md mx-auto">
-        <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-2xl bg-indigo-600/80 backdrop-blur-md flex items-center justify-center shadow-lg border border-indigo-400/30">
-                <i class="fa-solid fa-gamepad text-white text-sm"></i>
-            </div>
-            <div>
-                <h1 class="font-bold text-sm tracking-tight text-white">Арт Квест</h1>
-                <p class="text-[11px] text-slate-300">Safari Edition</p>
-            </div>
-        </div>
-        <div id="headerBadge" class="glass-panel px-3 py-1.5 rounded-full text-xs font-medium text-indigo-300 flex items-center space-x-2 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Главная</span>
+    <header class="relative z-10 w-full px-5 safe-padding-top flex justify-center items-center max-w-md mx-auto">
+        <!-- Minimal clean header without unnecessary status pill badges -->
+        <div class="w-8 h-8 rounded-xl bg-indigo-600/30 backdrop-blur-md flex items-center justify-center border border-indigo-400/20 shadow-inner">
+            <i class="fa-solid fa-sparkles text-indigo-300 text-xs"></i>
         </div>
     </header>
 
@@ -111,25 +115,25 @@
         <!-- PAGE 1: Start Screen (Art -> Text -> Play Button) -->
         <div id="page1" class="w-full flex flex-col space-y-4 transition-all duration-300">
             <!-- Top Art Box -->
-            <div class="glass-panel w-full h-44 rounded-3xl overflow-hidden relative shadow-xl border border-white/10 flex items-end p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+            <div class="glass-card w-full h-48 rounded-[2rem] overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center group" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
                 <div class="relative z-10">
-                    <span class="px-2.5 py-1 bg-indigo-500/30 text-indigo-200 text-[10px] font-semibold rounded-full border border-indigo-400/30">
+                    <span class="px-3 py-1 bg-indigo-500/30 backdrop-blur-md text-indigo-200 text-[10px] font-semibold rounded-full border border-indigo-400/30 shadow-sm">
                         <i class="fa-solid fa-star mr-1 text-amber-300"></i> Эксклюзивный Арт
                     </span>
-                    <h3 class="text-white font-bold text-sm mt-1">Визуальная галерея</h3>
+                    <h3 class="text-white font-bold text-sm mt-1.5 drop-shadow-sm">Визуальная галерея</h3>
                 </div>
             </div>
 
             <!-- Middle Text Box -->
-            <div class="glass-panel w-full rounded-3xl p-5 shadow-xl border border-white/10 text-center">
+            <div class="glass-panel w-full rounded-[2rem] p-6 shadow-2xl text-center">
                 <p class="text-xs text-slate-200 leading-relaxed font-medium">
                     Добро пожаловать в игру!
                 </p>
             </div>
 
             <!-- Bottom Big Play Button -->
-            <button onclick="goToPage2()" class="play-btn w-full py-4 rounded-2xl text-white font-bold text-sm tracking-wide shadow-lg flex items-center justify-center space-x-2">
+            <button onclick="goToPage2()" class="play-btn w-full py-4 rounded-2xl text-white font-bold text-sm tracking-wide shadow-xl flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-play text-xs"></i>
                 <span>Играть!</span>
             </button>
@@ -138,18 +142,18 @@
         <!-- PAGE 2: Telegram-style Menu & Password Screen -->
         <div id="page2" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
             <!-- Top Art Preview Card -->
-            <div class="glass-panel w-full h-32 rounded-3xl overflow-hidden relative shadow-xl border border-white/10 flex items-end p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+            <div class="glass-card w-full h-32 rounded-[2rem] overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
                 <div class="relative z-10">
                     <h3 class="text-white font-bold text-xs">Игровое Меню</h3>
                 </div>
             </div>
 
             <!-- Telegram Inline Buttons -->
-            <div class="space-y-2">
-                <button onclick="openInstructions()" class="telegram-btn w-full p-3.5 rounded-2xl text-xs font-medium flex items-center justify-between text-left">
-                    <span class="flex items-center space-x-3">
-                        <span class="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs">
+            <div class="space-y-2.5">
+                <button onclick="openInstructions()" class="telegram-btn w-full p-4 rounded-2xl text-xs font-medium flex items-center justify-between text-left">
+                    <span class="flex items-center space-x-3.5">
+                        <span class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs border border-indigo-500/20 shadow-inner">
                             <i class="fa-solid fa-book-open"></i>
                         </span>
                         <span class="text-white font-medium">Полная инструкция</span>
@@ -157,37 +161,37 @@
                     <i class="fa-solid fa-chevron-right text-slate-400 text-[10px]"></i>
                 </button>
 
-                <a href="https://t.me" target="_blank" class="telegram-btn w-full p-3.5 rounded-2xl text-xs font-medium flex items-center justify-between text-left block">
-                    <span class="flex items-center space-x-3">
-                        <span class="w-7 h-7 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <a href="https://t.me" target="_blank" class="telegram-btn w-full p-4 rounded-2xl text-xs font-medium flex items-center justify-between text-left block">
+                    <span class="flex items-center space-x-3.5">
+                        <span class="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs border border-sky-500/20 shadow-inner">
+                            <i class="fa-solid fa-download"></i>
                         </span>
-                        <span class="text-white font-medium">Внешняя ссылка</span>
+                        <span class="text-white font-medium">Установить игру</span>
                     </span>
                     <i class="fa-solid fa-chevron-right text-slate-400 text-[10px]"></i>
                 </a>
             </div>
 
             <!-- Password Box Section -->
-            <div class="glass-panel w-full rounded-3xl p-4 shadow-xl border border-white/10 space-y-3">
-                <h4 class="text-xs font-bold text-white text-center">Введите пароль для доступа</h4>
+            <div class="glass-panel w-full rounded-[2rem] p-5 shadow-2xl space-y-3.5">
+                <h4 class="text-xs font-bold text-white text-center tracking-wide">Введите пароль для доступа</h4>
                 <div class="flex space-x-2">
                     <div class="relative flex-1">
-                        <input type="password" id="passwordInput" placeholder="Введите пароль..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-3.5 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500">
+                        <input type="password" id="passwordInput" inputmode="numeric" pattern="[0-9]*" placeholder="Введите пароль..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 shadow-inner">
                     </div>
-                    <button onclick="pasteFromClipboard()" class="bg-slate-800 hover:bg-slate-700 active:scale-95 border border-white/10 text-indigo-300 px-3.5 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition-all" title="Вставить из буфера">
+                    <button onclick="pasteFromClipboard()" class="bg-slate-800/90 hover:bg-slate-700 active:scale-95 border border-white/10 text-indigo-300 px-4 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition-all shadow-md" title="Вставить из буфера">
                         <i class="fa-solid fa-paste"></i>
                         <span class="hidden sm:inline">Вставить</span>
                     </button>
                 </div>
-                <button onclick="checkPassword()" class="play-btn w-full py-3 rounded-xl text-white font-bold text-xs shadow-md flex items-center justify-center space-x-2">
+                <button onclick="checkPassword()" class="play-btn w-full py-3.5 rounded-xl text-white font-bold text-xs shadow-lg flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-key text-[10px]"></i>
                     <span>Проверить пароль</span>
                 </button>
-                <p id="errorMsg" class="text-[11px] text-rose-400 text-center hidden font-medium">Неверный пароль. Попробуйте снова (тест: 1234)</p>
+                <p id="errorMsg" class="text-[11px] text-rose-400 text-center hidden font-medium">Неверный пароль (тест: 1234)</p>
             </div>
 
-            <button onclick="goToPage1()" class="w-full py-2.5 rounded-2xl bg-slate-900/60 text-slate-400 text-xs font-semibold hover:bg-slate-800">
+            <button onclick="goToPage1()" class="w-full py-3 rounded-2xl bg-slate-900/40 text-slate-400 text-xs font-semibold hover:bg-slate-800/60 border border-white/5 transition-all">
                 <i class="fa-solid fa-arrow-left mr-1.5"></i> На главную
             </button>
         </div>
@@ -195,88 +199,79 @@
         <!-- SUB-PAGE: Full Instructions (Art + Back button) -->
         <div id="pageInstruction" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
             <!-- Art Box for Instructions -->
-            <div class="glass-panel w-full h-48 rounded-3xl overflow-hidden relative shadow-xl border border-white/10 flex items-end p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
+            <div class="glass-card w-full h-48 rounded-[2rem] overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
                 <div class="relative z-10">
-                    <span class="px-2.5 py-1 bg-teal-500/30 text-teal-200 text-[10px] font-semibold rounded-full border border-teal-400/30">
+                    <span class="px-3 py-1 bg-teal-500/30 backdrop-blur-md text-teal-200 text-[10px] font-semibold rounded-full border border-teal-400/30 shadow-sm">
                         <i class="fa-solid fa-info-circle mr-1"></i> Справка
                     </span>
-                    <h3 class="text-white font-bold text-sm mt-1">Правила и руководство</h3>
+                    <h3 class="text-white font-bold text-sm mt-1.5">Правила и руководство</h3>
                 </div>
             </div>
 
             <!-- Detailed Content Box -->
-            <div class="glass-panel w-full rounded-3xl p-5 shadow-xl border border-white/10 space-y-2">
-                <h4 class="text-xs font-bold text-indigo-300">Инструкция по прохождению:</h4>
-                <p class="text-[11px] text-slate-300 leading-relaxed">
+            <div class="glass-panel w-full rounded-[2rem] p-6 shadow-2xl space-y-2.5">
+                <h4 class="text-xs font-bold text-indigo-300 tracking-wide">Инструкция по прохождению:</h4>
+                <p class="text-[11px] text-slate-300 leading-relaxed font-medium">
                     1. Нажмите «Играть» для перехода в меню.<br>
-                    2. Введите секретный пароль в специальное поле (можно нажать «Вставить» или использовать нативный буфер).<br>
-                    3. При верном пароле откроется секретная 3-я страница с интерактивными ссылками-картинками.
+                    2. Введите секретный пароль в поле (можно использовать кнопку «Вставить»).<br>
+                    3. При верном пароле откроется победная страница с эксклюзивными ссылками.
                 </p>
             </div>
 
             <!-- Back Button -->
-            <button onclick="closeInstructions()" class="play-btn w-full py-3.5 rounded-2xl text-white font-bold text-xs shadow-lg flex items-center justify-center space-x-2">
+            <button onclick="closeInstructions()" class="play-btn w-full py-4 rounded-2xl text-white font-bold text-xs shadow-xl flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-arrow-left text-xs"></i>
                 <span>Назад в меню</span>
             </button>
         </div>
 
-        <!-- PAGE 3: Victory Page with 2 Image Link Buttons -->
+        <!-- PAGE 3: Victory Page with exact requested top-to-bottom order -->
         <div id="page3" class="w-full flex flex-col space-y-3.5 hidden opacity-0 transition-opacity duration-300">
-            <!-- Top Victory Art / Status -->
-            <div class="glass-panel w-full h-28 rounded-3xl overflow-hidden relative shadow-xl border border-white/10 flex items-end p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
-                <div class="relative z-10 flex items-center justify-between w-full">
-                    <div>
-                        <span class="px-2.5 py-1 bg-emerald-500/30 text-emerald-200 text-[10px] font-semibold rounded-full border border-emerald-400/30">
-                            <i class="fa-solid fa-circle-check mr-1"></i> Доступ открыт
-                        </span>
-                        <h3 class="text-white font-bold text-xs mt-1">Поздравляем с победой!</h3>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order: Image Link 1, Image Link 2, Start Over Button -->
-            <a href="https://t.me" target="_blank" class="group relative h-36 w-full rounded-2xl overflow-hidden glass-panel border border-white/15 block shadow-xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-slate-950/50 group-hover:bg-slate-950/30 transition-colors"></div>
-                <div class="absolute inset-0 p-4 flex flex-col justify-end">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-indigo-600/90 text-white flex items-center justify-center shadow-lg">
+            
+            <!-- 1. Top Image Link Button 1 -->
+            <a href="https://t.me" target="_blank" class="group relative h-36 w-full rounded-[2rem] overflow-hidden glass-card border border-white/15 block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=800&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent group-hover:bg-slate-950/60 transition-colors"></div>
+                <div class="absolute inset-0 p-5 flex flex-col justify-end">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-600/90 backdrop-blur-md text-white flex items-center justify-center shadow-lg border border-indigo-400/30">
                             <i class="fa-solid fa-brands fa-telegram text-base"></i>
                         </div>
                         <div>
                             <span class="text-xs font-bold text-white block shadow-sm">Канал / Ссылка 1</span>
-                            <span class="text-[10px] text-slate-300">Нажмите для перехода</span>
+                            <span class="text-[10px] text-slate-300 font-medium">Нажмите для перехода</span>
                         </div>
                     </div>
                 </div>
             </a>
 
-            <a href="https://github.com" target="_blank" class="group relative h-36 w-full rounded-2xl overflow-hidden glass-panel border border-white/15 block shadow-xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop');">
-                <div class="absolute inset-0 bg-slate-950/50 group-hover:bg-slate-950/30 transition-colors"></div>
-                <div class="absolute inset-0 p-4 flex flex-col justify-end">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-9 h-9 rounded-xl bg-purple-600/90 text-white flex items-center justify-center shadow-lg">
+            <!-- 2. Image Link Button 2 -->
+            <a href="https://github.com" target="_blank" class="group relative h-36 w-full rounded-[2rem] overflow-hidden glass-card border border-white/15 block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=800&auto=format&fit=crop');">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent group-hover:bg-slate-950/60 transition-colors"></div>
+                <div class="absolute inset-0 p-5 flex flex-col justify-end">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-10 h-10 rounded-2xl bg-purple-600/90 backdrop-blur-md text-white flex items-center justify-center shadow-lg border border-purple-400/30">
                             <i class="fa-solid fa-code text-sm"></i>
                         </div>
                         <div>
                             <span class="text-xs font-bold text-white block shadow-sm">Ресурс / Ссылка 2</span>
-                            <span class="text-[10px] text-slate-300">Нажмите для перехода</span>
+                            <span class="text-[10px] text-slate-300 font-medium">Нажмите для перехода</span>
                         </div>
                     </div>
                 </div>
             </a>
 
-            <button onclick="goToPage1()" class="w-full py-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 text-xs font-semibold shadow-md border border-white/10 transition-transform active:scale-95">
-                <i class="fa-solid fa-rotate-right mr-1.5"></i> Начать сначала
+            <!-- 3. Start Over Button -->
+            <button onclick="goToPage1()" class="w-full py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 text-xs font-semibold shadow-xl border border-white/10 transition-transform active:scale-95 flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-rotate-right text-xs"></i>
+                <span>Начать сначала</span>
             </button>
         </div>
 
     </main>
 
-    <footer class="relative z-10 w-full px-5 safe-padding-bottom text-center text-[10px] text-slate-500">
-        Оптимизировано для Safari & iPhone 17 Pro Max
+    <footer class="relative z-10 w-full px-5 safe-padding-bottom text-center text-[10px] text-slate-400 font-medium tracking-wide">
+        Лучшему игроку
     </footer>
 
     <script>
@@ -289,7 +284,6 @@
         function goToPage2() {
             const p1 = document.getElementById('page1');
             const p2 = document.getElementById('page2');
-            const badge = document.getElementById('headerBadge');
             
             setArt(2);
             p1.classList.add('opacity-0');
@@ -297,7 +291,6 @@
                 p1.classList.add('hidden');
                 p2.classList.remove('hidden');
                 setTimeout(() => p2.classList.remove('opacity-0'), 20);
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400"></span><span>Меню</span>';
             }, 300);
         }
 
@@ -305,7 +298,6 @@
             const p2 = document.getElementById('page2');
             const p3 = document.getElementById('page3');
             const p1 = document.getElementById('page1');
-            const badge = document.getElementById('headerBadge');
             
             setArt(1);
             p2.classList.add('opacity-0');
@@ -315,7 +307,6 @@
                 p3.classList.add('hidden');
                 p1.classList.remove('hidden');
                 setTimeout(() => p1.classList.remove('opacity-0'), 20);
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>Главная</span>';
                 document.getElementById('passwordInput').value = '';
                 document.getElementById('errorMsg').classList.add('hidden');
             }, 300);
@@ -324,31 +315,28 @@
         function openInstructions() {
             const p2 = document.getElementById('page2');
             const pi = document.getElementById('pageInstruction');
-            const badge = document.getElementById('headerBadge');
             
             p2.classList.add('opacity-0');
             setTimeout(() => {
                 p2.classList.add('hidden');
                 pi.classList.remove('hidden');
                 setTimeout(() => pi.classList.remove('opacity-0'), 20);
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-teal-400"></span><span>Инструкция</span>';
             }, 300);
         }
 
         function closeInstructions() {
             const p2 = document.getElementById('page2');
             const pi = document.getElementById('pageInstruction');
-            const badge = document.getElementById('headerBadge');
             
             pi.classList.add('opacity-0');
             setTimeout(() => {
                 pi.classList.add('hidden');
                 p2.classList.remove('hidden');
                 setTimeout(() => p2.classList.remove('opacity-0'), 20);
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-indigo-400"></span><span>Меню</span>';
             }, 300);
         }
 
+        // Robust clipboard pasting mechanism compatible with iOS Safari
         async function pasteFromClipboard() {
             const inputField = document.getElementById('passwordInput');
             inputField.focus();
@@ -356,21 +344,28 @@
             try {
                 if (navigator.clipboard && navigator.clipboard.readText) {
                     const text = await navigator.clipboard.readText();
-                    inputField.value = text;
-                } else {
-                    throw new Error('Clipboard read API not supported/allowed in this context');
+                    if (text) {
+                        inputField.value = text.trim();
+                        return;
+                    }
                 }
+                throw new Error('Clipboard API unavailable or restricted');
             } catch (err) {
-                // Fallback: gracefully prompt or let user use native context menu paste
+                // Fallback for Safari security restrictions: prompt paste action
                 try {
                     const pasted = await window.navigator.clipboard.readText();
-                    inputField.value = pasted;
+                    if (pasted) {
+                        inputField.value = pasted.trim();
+                        return;
+                    }
                 } catch (e) {
-                    // Safe fallback notification without crashing
-                    inputField.setAttribute('placeholder', 'Нажмите и удерживайте для вставки');
+                    // Visual assistance: highlight input and guide user to native iOS paste bubble
+                    inputField.placeholder = "Удерживайте поле для вставки...";
+                    inputField.classList.add('border-indigo-400');
                     setTimeout(() => {
-                        inputField.setAttribute('placeholder', 'Введите пароль...');
-                    }, 2500);
+                        inputField.placeholder = "Введите пароль...";
+                        inputField.classList.remove('border-indigo-400');
+                    }, 3000);
                 }
             }
         }
@@ -379,7 +374,7 @@
             const pwd = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
             
-            // Тестовый пароль для примера: 1234
+            // Test password: 1234
             if (pwd === '1234') {
                 errorMsg.classList.add('hidden');
                 goToPage3();
@@ -394,7 +389,6 @@
         function goToPage3() {
             const p2 = document.getElementById('page2');
             const p3 = document.getElementById('page3');
-            const badge = document.getElementById('headerBadge');
             
             setArt(3);
             p2.classList.add('opacity-0');
@@ -402,7 +396,6 @@
                 p2.classList.add('hidden');
                 p3.classList.remove('hidden');
                 setTimeout(() => p3.classList.remove('opacity-0'), 20);
-                badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400"></span><span>Победа</span>';
             }, 300);
         }
     </script>
