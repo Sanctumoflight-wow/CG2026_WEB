@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sanctum of Light Quest</title>
+    
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
@@ -20,6 +21,7 @@
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             -webkit-user-select: none;
+            background-color: #020617; /* Slate 950 */
         }
 
         .divine-font {
@@ -28,104 +30,113 @@
         }
 
         /* Safe area support for iPhone dynamic island and bottom bar */
-        .safe-pt {
-            padding-top: max(env(safe-area-inset-top, 20px), 20px);
-        }
-        .safe-pb {
-            padding-bottom: max(env(safe-area-inset-bottom, 20px), 24px);
-        }
+        .safe-pt { padding-top: max(env(safe-area-inset-top, 20px), 24px); }
+        .safe-pb { padding-bottom: max(env(safe-area-inset-bottom, 20px), 24px); }
 
-        /* Deluxe Celestial Panels - Wide, velvety golden frames */
+        /* Deluxe Celestial Panels - Smooth, premium glassmorphism without pixelated edges */
         .celestial-panel {
-            background: rgba(11, 16, 32, 0.88);
+            background: rgba(15, 23, 42, 0.75);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 2px solid rgba(245, 197, 66, 0.45);
+            border: 1px solid rgba(253, 224, 71, 0.25);
             box-shadow: 
-                0 16px 36px -10px rgba(0, 0, 0, 0.8),
-                inset 0 0 20px rgba(245, 197, 66, 0.08),
-                0 0 15px rgba(245, 197, 66, 0.15);
-            border-radius: 1.75rem;
+                0 24px 48px -12px rgba(0, 0, 0, 0.9),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                inset 0 0 24px rgba(245, 197, 66, 0.05),
+                0 0 16px rgba(245, 197, 66, 0.1);
+            border-radius: 1.5rem;
         }
 
-        /* Celestial Card with wide rim */
+        /* Celestial Card with smooth glowing rim */
         .celestial-card {
-            border: 2.5px solid rgba(245, 197, 66, 0.4);
+            border: 1.5px solid rgba(253, 224, 71, 0.35);
             box-shadow: 
-                0 16px 32px rgba(0, 0, 0, 0.75),
-                inset 0 1px 1px rgba(255, 255, 255, 0.2);
+                0 20px 40px rgba(0, 0, 0, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                0 0 20px rgba(245, 197, 66, 0.15);
         }
 
         /* Primary Divine Button (Gold) */
         .celestial-btn {
             background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #b45309 100%);
-            border: 2px solid rgba(254, 240, 138, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 
-                0 8px 24px rgba(217, 119, 6, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+                0 10px 25px rgba(217, 119, 6, 0.45),
+                inset 0 1px 2px rgba(255, 255, 255, 0.8);
             border-radius: 1.25rem;
-            transition: transform 0.12s ease, filter 0.12s ease;
+            transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
         }
         .celestial-btn:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
             filter: brightness(0.9);
+            box-shadow: 0 4px 10px rgba(217, 119, 6, 0.4);
         }
 
         /* Secondary Divine Action Button */
         .celestial-btn-secondary {
-            background: rgba(15, 23, 42, 0.9);
-            border: 2px solid rgba(245, 197, 66, 0.35);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 197, 66, 0.4);
+            box-shadow: 
+                0 10px 24px rgba(0, 0, 0, 0.6),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
             border-radius: 1.25rem;
-            transition: transform 0.12s ease, border-color 0.12s ease;
+            transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
         }
         .celestial-btn-secondary:active {
             transform: scale(0.96);
-            border-color: rgba(245, 197, 66, 0.7);
+            background: rgba(30, 41, 59, 0.95);
+            border-color: rgba(245, 197, 66, 0.8);
         }
 
-        /* 8-Digit Code Slot */
+        /* Visible Digit Slots */
         .pin-slot {
             aspect-ratio: 1;
-            background: rgba(15, 23, 42, 0.85);
-            border: 2px solid rgba(245, 197, 66, 0.3);
-            border-radius: 0.75rem;
+            background: rgba(10, 15, 30, 0.6);
+            border: 1.5px solid rgba(245, 197, 66, 0.2);
+            border-radius: 0.5rem;
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
         }
         .pin-slot.filled {
             border-color: #fde047;
             background: rgba(245, 197, 66, 0.15);
-            box-shadow: 0 0 12px rgba(245, 197, 66, 0.35);
+            box-shadow: 0 0 12px rgba(245, 197, 66, 0.3);
+            text-shadow: 0 0 10px rgba(253, 224, 71, 0.8);
         }
 
-        /* Numeric Keypad Buttons */
+        /* Numeric Keypad Buttons (Smaller for 4 columns) */
         .key-btn {
-            background: rgba(18, 25, 45, 0.85);
-            border: 2px solid rgba(245, 197, 66, 0.25);
-            border-radius: 1.25rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            border-radius: 1rem;
             transition: all 0.1s ease;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
         .key-btn:active {
-            transform: scale(0.92);
+            transform: scale(0.9);
             background: rgba(245, 197, 66, 0.25);
             border-color: #fde047;
+            box-shadow: 0 0 15px rgba(245, 197, 66, 0.3);
         }
 
         /* Error Shake Animation */
         @keyframes divineShake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
-        .shake {
-            animation: divineShake 0.4s ease-in-out;
-        }
+        .shake { animation: divineShake 0.4s ease-in-out; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-full flex flex-col justify-between overflow-x-hidden relative">
+<body class="text-slate-100 min-h-full flex flex-col justify-between overflow-x-hidden relative">
 
-    <!-- DYNAMIC BACKGROUND ART -->
     <div id="artContainer" class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <!-- Page 1 Background -->
         <div id="art1" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-100 scale-105" 
@@ -135,7 +146,7 @@
              style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg'); filter: brightness(0.35) saturate(1.2);"></div>
         <!-- Page 3 Background -->
         <div id="art3" class="absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-105" 
-             style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_01.jpg'); filter: brightness(0.35) saturate(1.2);"></div>
+             style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg'); filter: brightness(0.35) saturate(1.2);"></div>
         
         <!-- Vignette & Warm Halo Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
@@ -148,56 +159,70 @@
         <!-- ========================================== -->
         <!-- PAGE 1: Welcome & Vertical Hero Art        -->
         <!-- ========================================== -->
-        <div id="page1" class="w-full flex flex-col space-y-4 transition-all duration-300">
-            <!-- 1. Vertical Art Card -->
-            <div class="celestial-card w-full h-[370px] sm:h-[420px] rounded-3xl overflow-hidden relative shadow-2xl bg-cover bg-center" 
-                 style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
-                <div class="absolute bottom-4 left-5 right-5 flex items-center justify-between">
-                    <span class="px-3.5 py-1 rounded-full bg-amber-500/20 backdrop-blur-md border border-amber-400/40 text-amber-200 text-xs divine-font font-bold">
-                        <i class="fa-solid fa-sparkles mr-1 text-amber-300"></i> Sanctum of Light
-                    </span>
+        <div id="page1" class="w-full flex flex-col space-y-4 transition-all duration-300 h-full justify-between pb-2">
+            
+            <div class="flex-1 flex flex-col w-full justify-center space-y-4">
+                <!-- Vertical Art Card -->
+                <div class="celestial-card w-full h-[380px] sm:h-[420px] rounded-[1.75rem] overflow-hidden relative bg-cover bg-center" 
+                     style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test.jpg');">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Text Box -->
+                <div class="celestial-panel w-full p-5 text-center">
+                    <h1 class="text-xl divine-font font-bold text-amber-200 tracking-wide drop-shadow-sm">
+                        Добро пожаловать в игру!
+                    </h1>
+                    <p class="text-xs text-slate-300 font-medium leading-relaxed mt-2">
+                        Пройдите через врата света, разгадайте секретный пароль и получите доступ к особым праздничным наградам.
+                    </p>
                 </div>
             </div>
 
-            <!-- 2. Text Box -->
-            <div class="celestial-panel w-full p-5 text-center">
-                <h1 class="text-xl divine-font font-bold text-amber-200 tracking-wide drop-shadow-sm">
-                    Добро пожаловать в игру!
-                </h1>
-                <p class="text-xs text-slate-300 font-medium leading-relaxed mt-2">
-                    Пройдите через врата света, разгадайте секретный пароль и получите доступ к особым праздничным наградам.
-                </p>
-            </div>
-
-            <!-- 3. Big Action Button -->
-            <button onclick="goToPage2()" class="celestial-btn w-full py-4 text-base divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2.5">
+            <!-- Big Action Button -->
+            <button onclick="goToPage2()" class="celestial-btn w-full py-4 text-[17px] divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2.5">
                 <span>Играть!</span>
-                <i class="fa-solid fa-chevron-right text-xs"></i>
+                <i class="fa-solid fa-chevron-right text-sm"></i>
             </button>
         </div>
 
         <!-- ========================================== -->
-        <!-- PAGE 2: Code Entry, Menu & NumPad          -->
+        <!-- PAGE 2: Menu, iOS Instructions & NumPad    -->
         <!-- ========================================== -->
         <div id="page2" class="w-full flex flex-col space-y-3.5 hidden opacity-0 transition-all duration-300">
-            <!-- Top Clean Text Box -->
-            <div class="celestial-panel w-full p-4 text-center">
-                <h2 class="text-sm divine-font font-bold text-amber-200 tracking-wide">
-                    Введите секретный код
+            
+            <!-- Installation iOS Icon Info Box -->
+            <div class="celestial-panel w-full p-4 space-y-2">
+                <h2 class="text-[13px] divine-font font-bold text-amber-200 text-center tracking-wide mb-1.5">
+                    Установка на iPhone
                 </h2>
-                <p class="text-[11px] text-slate-300 leading-snug mt-1 font-medium">
-                    Наберите 8 цифр на панели для перехода к подарку
-                </p>
+                <div class="grid grid-cols-2 gap-2 text-[10px] text-slate-300 font-medium leading-tight">
+                    <div class="flex items-center space-x-2 bg-slate-900/40 p-2 rounded-lg border border-amber-400/10">
+                        <i class="fa-regular fa-compass text-amber-400 text-sm w-4 text-center"></i>
+                        <span>1. Открыть в Safari</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-900/40 p-2 rounded-lg border border-amber-400/10">
+                        <i class="fa-solid fa-arrow-up-from-bracket text-blue-400 text-sm w-4 text-center"></i>
+                        <span>2. Поделиться</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-900/40 p-2 rounded-lg border border-amber-400/10">
+                        <i class="fa-regular fa-square-plus text-slate-200 text-sm w-4 text-center"></i>
+                        <span>3. На экран «Домой»</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-slate-900/40 p-2 rounded-lg border border-amber-400/10">
+                        <i class="fa-solid fa-check text-green-400 text-sm w-4 text-center"></i>
+                        <span>4. Готово</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Navigation Buttons (Instruction & Install) -->
-            <div class="grid grid-cols-2 gap-2.5 w-full">
-                <button onclick="openInstructions()" class="celestial-btn-secondary py-3 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-1.5">
-                    <i class="fa-solid fa-scroll text-amber-400"></i>
-                    <span>Инструкция</span>
+            <!-- Full-width Navigation Buttons -->
+            <div class="flex flex-col gap-2.5 w-full">
+                <button onclick="openInstructions()" class="celestial-btn-secondary w-full py-3.5 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-image text-amber-400"></i>
+                    <span>Подробная инструкция установки</span>
                 </button>
-                <a href="https://t.me" target="_blank" class="celestial-btn-secondary py-3 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-1.5">
+                <a href="https://sanctumoflight-wow.github.io/CG2026/" target="_blank" class="celestial-btn-secondary w-full py-3.5 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-download text-amber-400"></i>
                     <span>Установить игру</span>
                 </a>
@@ -206,61 +231,45 @@
             <!-- 8 Visible Digit Slots -->
             <div id="pinBox" class="celestial-panel w-full p-4 flex flex-col items-center">
                 <div class="grid grid-cols-8 gap-1.5 w-full">
-                    <div id="slot0" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot1" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot2" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot3" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot4" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot5" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot6" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
-                    <div id="slot7" class="pin-slot flex items-center justify-center text-sm divine-font font-bold text-amber-300">-</div>
+                    <div id="slot0" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot1" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot2" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot3" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot4" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot5" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot6" class="pin-slot divine-font font-bold text-amber-200"></div>
+                    <div id="slot7" class="pin-slot divine-font font-bold text-amber-200"></div>
                 </div>
             </div>
 
-            <!-- iOS Safari Optimized Keypad (1 to 0 centered) -->
-            <div class="w-full grid grid-cols-3 gap-2 pt-1">
-                <button onclick="pressDigit('1')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">1</button>
-                <button onclick="pressDigit('2')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">2</button>
-                <button onclick="pressDigit('3')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">3</button>
+            <!-- iOS Safari Optimized Keypad (4 columns, 9 and 0 centered) -->
+            <div class="w-full grid grid-cols-4 gap-2.5 pt-1 px-1">
+                <button onclick="pressDigit('1')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">1</button>
+                <button onclick="pressDigit('2')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">2</button>
+                <button onclick="pressDigit('3')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">3</button>
+                <button onclick="pressDigit('4')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">4</button>
 
-                <button onclick="pressDigit('4')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">4</button>
-                <button onclick="pressDigit('5')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">5</button>
-                <button onclick="pressDigit('6')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">6</button>
+                <button onclick="pressDigit('5')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">5</button>
+                <button onclick="pressDigit('6')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">6</button>
+                <button onclick="pressDigit('7')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">7</button>
+                <button onclick="pressDigit('8')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">8</button>
 
-                <button onclick="pressDigit('7')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">7</button>
-                <button onclick="pressDigit('8')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">8</button>
-                <button onclick="pressDigit('9')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100">9</button>
-
-                <!-- Zero Key Centered -->
-                <button onclick="pressDigit('0')" class="key-btn py-3.5 text-lg divine-font font-bold text-amber-100 col-start-2">0</button>
+                <!-- Center 9 and 0 -->
+                <button onclick="pressDigit('9')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100 col-start-2">9</button>
+                <button onclick="pressDigit('0')" class="key-btn py-3 text-lg divine-font font-bold text-amber-100">0</button>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- SUB-PAGE: Full Instructions                -->
+        <!-- SUB-PAGE: Full Instructions (WU_03.jpg)    -->
         <!-- ========================================== -->
-        <div id="pageInstruction" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-all duration-300">
-            <div class="celestial-card w-full h-48 rounded-3xl overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" 
-                 style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/Test2.jpg');">
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent"></div>
-                <div class="relative z-10">
-                    <span class="px-3 py-1 bg-amber-500/25 backdrop-blur-md text-amber-200 text-[10px] font-bold rounded-full border border-amber-400/40 divine-font">
-                        Справка
-                    </span>
-                    <h3 class="text-white divine-font font-bold text-base mt-2">Руководство квеста</h3>
-                </div>
+        <div id="pageInstruction" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-all duration-300 h-[85vh]">
+            
+            <div class="flex-1 w-full rounded-[1.5rem] overflow-y-auto celestial-card bg-slate-900 scrollbar-hide">
+                <img src="https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_03.jpg" alt="Instruction" class="w-full h-auto">
             </div>
 
-            <div class="celestial-panel w-full p-5 space-y-2">
-                <h4 class="text-xs divine-font font-bold text-amber-300 tracking-wide">Правила прохождения:</h4>
-                <p class="text-xs text-slate-300 leading-relaxed font-medium">
-                    1. Нажмите «Играть» для перехода к экрану ввода кода.<br>
-                    2. Введите секретный 8-значный пароль на клавиатуре.<br>
-                    3. При правильном коде откроется страница с подарками и ссылками.
-                </p>
-            </div>
-
-            <button onclick="closeInstructions()" class="celestial-btn w-full py-4 text-xs divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2">
+            <button onclick="closeInstructions()" class="celestial-btn w-full py-4 text-xs divine-font font-black tracking-wider text-slate-950 flex items-center justify-center space-x-2 shrink-0">
                 <i class="fa-solid fa-arrow-left text-xs"></i>
                 <span>Назад в меню</span>
             </button>
@@ -269,29 +278,32 @@
         <!-- ========================================== -->
         <!-- PAGE 3: Birthday Celebration & Links       -->
         <!-- ========================================== -->
-        <div id="page3" class="w-full flex flex-col space-y-3.5 hidden opacity-0 transition-all duration-300">
+        <div id="page3" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-all duration-300">
+            
             <!-- Birthday Congratulations Banner -->
-            <div class="celestial-panel w-full p-3.5 text-center">
-                <h2 class="text-lg divine-font font-bold text-amber-300 tracking-wider">
-                    <i class="fa-solid fa-crown mr-2 text-amber-400"></i>С Днём Рождения!
+            <div class="celestial-panel w-full p-4 text-center">
+                <h2 class="text-lg divine-font font-bold text-amber-300 tracking-wider flex items-center justify-center">
+                    <i class="fa-solid fa-crown mr-2.5 text-amber-400"></i>
+                    С Днём Рождения!
+                    <i class="fa-solid fa-crown ml-2.5 text-amber-400"></i>
                 </h2>
             </div>
 
             <!-- Top Image Card Block (WU_01.jpg) - Strict 16:9 Aspect Ratio -->
             <a href="https://t.me" target="_blank" 
-               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" 
+               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block transition-transform active:scale-95 bg-cover bg-center" 
                style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_01.jpg');">
             </a>
 
             <!-- Lower Image Card Block (WU_02.jpg) - Strict 16:9 Aspect Ratio -->
             <a href="https://github.com" target="_blank" 
-               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block shadow-2xl transition-transform active:scale-95 bg-cover bg-center" 
+               class="celestial-card relative w-full aspect-video rounded-3xl overflow-hidden block transition-transform active:scale-95 bg-cover bg-center" 
                style="background-image: url('https://raw.githubusercontent.com/Sanctumoflight-wow/CG2026_WEB/main/image/WU_02.jpg');">
             </a>
 
             <!-- Start Over Button -->
-            <button onclick="goToPage1()" class="celestial-btn-secondary w-full py-3.5 text-xs divine-font font-bold text-amber-200 flex items-center justify-center space-x-2">
-                <i class="fa-solid fa-rotate-right text-xs"></i>
+            <button onclick="goToPage1()" class="celestial-btn-secondary w-full py-4 text-[13px] divine-font font-bold text-amber-200 flex items-center justify-center space-x-2 mt-2">
+                <i class="fa-solid fa-rotate-right text-sm"></i>
                 <span>Начать сначала</span>
             </button>
         </div>
@@ -300,7 +312,7 @@
 
     <!-- LOGIC SCRIPT -->
     <script>
-        const CORRECT_PASSWORD = '11111111'; // Тестовый 8-значный пароль
+        const CORRECT_PASSWORD = '11111111'; // 8-значный пароль
         let currentPin = '';
 
         // Elements
@@ -376,7 +388,7 @@
 
                 // Auto-verify on 8th digit
                 if (currentPin.length === 8) {
-                    setTimeout(verifyPin, 180);
+                    setTimeout(verifyPin, 200);
                 }
             }
         }
@@ -388,7 +400,7 @@
                     slot.textContent = currentPin[i];
                     slot.classList.add('filled');
                 } else {
-                    slot.textContent = '-';
+                    slot.textContent = '';
                     slot.classList.remove('filled');
                 }
             }
@@ -408,5 +420,16 @@
             }
         }
     </script>
+    
+    <style>
+        /* Hide scrollbar for instructions panel */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 </body>
 </html>
