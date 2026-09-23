@@ -69,6 +69,45 @@
             filter: brightness(0.95);
         }
 
+        .numpad-key {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .numpad-key:active {
+            transform: scale(0.91);
+            background: rgba(99, 102, 241, 0.35);
+            border-color: rgba(165, 180, 252, 0.4);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.45);
+        }
+
+        .pin-dot {
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .pin-dot.active {
+            background: #6366f1;
+            border-color: #a5b4fc;
+            box-shadow: 0 0 14px rgba(99, 102, 241, 0.9);
+            transform: scale(1.2);
+        }
+
+        .shake-error {
+            animation: shake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
         @keyframes pulseGlow {
             0%, 100% { opacity: 0.4; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(1.06); }
@@ -138,7 +177,7 @@
         <!-- PAGE 2: Telegram-style Menu & Password Screen -->
         <div id="page2" class="w-full flex flex-col space-y-4 hidden opacity-0 transition-opacity duration-300">
             <!-- Top Art Preview Card -->
-            <div class="glass-card w-full h-32 rounded-[2rem] overflow-hidden relative shadow-2xl flex items-end p-5 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop');">
+            <div class="glass-card w-full h-28 rounded-[2rem] overflow-hidden relative shadow-2xl flex items-end p-4 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop');">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent"></div>
                 <div class="relative z-10">
                     <h3 class="text-white font-bold text-xs">Игровое Меню</h3>
@@ -146,10 +185,10 @@
             </div>
 
             <!-- Telegram Inline Buttons -->
-            <div class="space-y-2.5">
-                <button onclick="openInstructions()" class="telegram-btn w-full p-4 rounded-2xl text-xs font-medium flex items-center justify-between text-left">
-                    <span class="flex items-center space-x-3.5">
-                        <span class="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs border border-indigo-500/20 shadow-inner">
+            <div class="space-y-2">
+                <button onclick="openInstructions()" class="telegram-btn w-full p-3.5 rounded-2xl text-xs font-medium flex items-center justify-between text-left">
+                    <span class="flex items-center space-x-3">
+                        <span class="w-7 h-7 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs border border-indigo-500/20 shadow-inner">
                             <i class="fa-solid fa-book-open"></i>
                         </span>
                         <span class="text-white font-medium">Полная инструкция</span>
@@ -157,9 +196,9 @@
                     <i class="fa-solid fa-chevron-right text-slate-400 text-[10px]"></i>
                 </button>
 
-                <a href="https://t.me" target="_blank" class="telegram-btn w-full p-4 rounded-2xl text-xs font-medium flex items-center justify-between text-left block">
-                    <span class="flex items-center space-x-3.5">
-                        <span class="w-8 h-8 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs border border-sky-500/20 shadow-inner">
+                <a href="https://t.me" target="_blank" class="telegram-btn w-full p-3.5 rounded-2xl text-xs font-medium flex items-center justify-between text-left block">
+                    <span class="flex items-center space-x-3">
+                        <span class="w-7 h-7 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xs border border-sky-500/20 shadow-inner">
                             <i class="fa-solid fa-download"></i>
                         </span>
                         <span class="text-white font-medium">Установить игру</span>
@@ -168,23 +207,55 @@
                 </a>
             </div>
 
-            <!-- Password Box Section -->
-            <div class="glass-panel w-full rounded-[2rem] p-5 shadow-2xl space-y-3.5">
-                <h4 class="text-xs font-bold text-white text-center tracking-wide">Введите пароль для доступа</h4>
-                <div class="flex space-x-2">
-                    <div class="relative flex-1">
-                        <input type="password" id="passwordInput" inputmode="numeric" pattern="[0-9]*" placeholder="Введите пароль..." class="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors shadow-inner">
-                    </div>
-                    <button type="button" onclick="pasteFromClipboard()" class="bg-indigo-600/30 hover:bg-indigo-600/50 active:scale-95 border border-indigo-400/30 text-indigo-200 px-4 rounded-xl text-xs font-medium flex items-center justify-center space-x-1.5 transition-all shadow-md" title="Вставить из буфера">
-                        <i class="fa-solid fa-paste"></i>
-                        <span>Вставить</span>
+            <!-- Password / PIN Keypad Section -->
+            <div id="pinBoxCard" class="glass-panel w-full rounded-[2rem] p-5 shadow-2xl space-y-4">
+                <div class="text-center space-y-1">
+                    <h4 class="text-xs font-bold text-white tracking-wide">Введите пароль для доступа</h4>
+                    <p class="text-[10px] text-slate-400">Наберите цифры на экране</p>
+                </div>
+
+                <!-- PIN Indicators (4 interactive glowing slots) -->
+                <div id="pinDotsContainer" class="flex items-center justify-center space-x-3.5 py-1">
+                    <div id="dot0" class="pin-dot w-3.5 h-3.5 rounded-full border-2 border-slate-600 bg-slate-900/80"></div>
+                    <div id="dot1" class="pin-dot w-3.5 h-3.5 rounded-full border-2 border-slate-600 bg-slate-900/80"></div>
+                    <div id="dot2" class="pin-dot w-3.5 h-3.5 rounded-full border-2 border-slate-600 bg-slate-900/80"></div>
+                    <div id="dot3" class="pin-dot w-3.5 h-3.5 rounded-full border-2 border-slate-600 bg-slate-900/80"></div>
+                </div>
+
+                <!-- Ergonomic NumPad Grid (3 x 4) -->
+                <div class="grid grid-cols-3 gap-2.5 max-w-[260px] mx-auto pt-1">
+                    <button type="button" onclick="handlePinInput('1')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">1</button>
+                    <button type="button" onclick="handlePinInput('2')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">2</button>
+                    <button type="button" onclick="handlePinInput('3')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">3</button>
+
+                    <button type="button" onclick="handlePinInput('4')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">4</button>
+                    <button type="button" onclick="handlePinInput('5')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">5</button>
+                    <button type="button" onclick="handlePinInput('6')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">6</button>
+
+                    <button type="button" onclick="handlePinInput('7')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">7</button>
+                    <button type="button" onclick="handlePinInput('8')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">8</button>
+                    <button type="button" onclick="handlePinInput('9')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">9</button>
+
+                    <!-- Paste from clipboard button -->
+                    <button type="button" onclick="pasteFromClipboard()" class="numpad-key h-12 rounded-2xl flex flex-col items-center justify-center text-indigo-300" title="Вставить из буфера">
+                        <i class="fa-solid fa-paste text-xs"></i>
+                        <span class="text-[8px] font-semibold mt-0.5">Вставить</span>
+                    </button>
+                    <button type="button" onclick="handlePinInput('0')" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white">0</button>
+                    <!-- Backspace / Delete button -->
+                    <button type="button" onclick="handlePinBackspace()" class="numpad-key h-12 rounded-2xl flex items-center justify-center text-rose-300" title="Стереть">
+                        <i class="fa-solid fa-delete-left text-sm"></i>
                     </button>
                 </div>
+
+                <!-- Verify Button -->
                 <button onclick="checkPassword()" class="play-btn w-full py-3.5 rounded-xl text-white font-bold text-xs shadow-lg flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-key text-[10px]"></i>
                     <span>Проверить пароль</span>
                 </button>
-                <p id="pasteHint" class="text-[11px] text-amber-300 text-center hidden font-medium">Зажмите поле ввода и нажмите «Вставить»</p>
+
+                <!-- Feedback Messages -->
+                <p id="pasteHint" class="text-[11px] text-amber-300 text-center hidden font-medium">Буфер обмена пуст или заблокирован</p>
                 <p id="errorMsg" class="text-[11px] text-rose-400 text-center hidden font-medium">Неверный пароль (тест: 1234)</p>
             </div>
 
@@ -272,6 +343,57 @@
     </footer>
 
     <script>
+        let currentPin = '';
+        const TARGET_PASSWORD = '1234';
+
+        function updatePinDisplay() {
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot${i}`);
+                if (dot) {
+                    if (i < currentPin.length) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                }
+            }
+        }
+
+        function handlePinInput(digit) {
+            const errorMsg = document.getElementById('errorMsg');
+            if (errorMsg) errorMsg.classList.add('hidden');
+
+            if (currentPin.length < 4) {
+                currentPin += digit;
+                updatePinDisplay();
+
+                // Автоматическая проверка при наборе всех 4 цифр
+                if (currentPin.length === 4) {
+                    setTimeout(() => {
+                        checkPassword();
+                    }, 120);
+                }
+            }
+        }
+
+        function handlePinBackspace() {
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1);
+                updatePinDisplay();
+            }
+            const errorMsg = document.getElementById('errorMsg');
+            if (errorMsg) errorMsg.classList.add('hidden');
+        }
+
+        function resetPin() {
+            currentPin = '';
+            updatePinDisplay();
+            const errorMsg = document.getElementById('errorMsg');
+            if (errorMsg) errorMsg.classList.add('hidden');
+            const pasteHint = document.getElementById('pasteHint');
+            if (pasteHint) pasteHint.classList.add('hidden');
+        }
+
         function setArt(artNumber) {
             document.getElementById('art1').style.opacity = artNumber === 1 ? '1' : '0';
             document.getElementById('art2').style.opacity = artNumber === 2 ? '1' : '0';
@@ -282,6 +404,7 @@
             const p1 = document.getElementById('page1');
             const p2 = document.getElementById('page2');
             
+            resetPin();
             setArt(2);
             p1.classList.add('opacity-0');
             setTimeout(() => {
@@ -296,6 +419,7 @@
             const p3 = document.getElementById('page3');
             const p1 = document.getElementById('page1');
             
+            resetPin();
             setArt(1);
             p2.classList.add('opacity-0');
             p3.classList.add('opacity-0');
@@ -304,8 +428,6 @@
                 p3.classList.add('hidden');
                 p1.classList.remove('hidden');
                 setTimeout(() => p1.classList.remove('opacity-0'), 20);
-                document.getElementById('passwordInput').value = '';
-                document.getElementById('errorMsg').classList.add('hidden');
             }, 300);
         }
 
@@ -333,50 +455,53 @@
             }, 300);
         }
 
-        // Оптимизированная вставка для Safari iOS без потери transient user gesture
         async function pasteFromClipboard() {
-            const inputField = document.getElementById('passwordInput');
             const pasteHint = document.getElementById('pasteHint');
             if (pasteHint) pasteHint.classList.add('hidden');
 
             try {
-                // В Safari iOS readText ДОЛЖЕН вызываться строго синхронно в момент тапа
                 if (navigator.clipboard && typeof navigator.clipboard.readText === 'function') {
                     const text = await navigator.clipboard.readText();
                     if (text && text.trim().length > 0) {
-                        inputField.value = text.trim();
-                        // Зеленая подсветка успешной вставки
-                        inputField.classList.add('border-emerald-500', 'bg-emerald-950/40');
-                        setTimeout(() => {
-                            inputField.classList.remove('border-emerald-500', 'bg-emerald-950/40');
-                        }, 700);
-                        return;
+                        // Оставляем только цифры из буфера
+                        const digits = text.replace(/\D/g, '').slice(0, 4);
+                        if (digits.length > 0) {
+                            currentPin = digits;
+                            updatePinDisplay();
+                            if (currentPin.length === 4) {
+                                setTimeout(checkPassword, 150);
+                            }
+                            return;
+                        }
                     }
                 }
-                throw new Error('Clipboard API unavailable or empty');
+                throw new Error('Clipboard empty or restricted');
             } catch (err) {
-                // Если Safari блокирует авто-чтение (например, в окне предпросмотра без HTTPS)
-                inputField.focus();
                 if (pasteHint) {
                     pasteHint.classList.remove('hidden');
-                    setTimeout(() => pasteHint.classList.add('hidden'), 4000);
+                    setTimeout(() => pasteHint.classList.add('hidden'), 3000);
                 }
             }
         }
 
         function checkPassword() {
-            const pwd = document.getElementById('passwordInput').value.trim();
             const errorMsg = document.getElementById('errorMsg');
+            const pinCard = document.getElementById('pinBoxCard');
             
-            // Test password: 1234
-            if (pwd === '1234') {
-                errorMsg.classList.add('hidden');
+            if (currentPin === TARGET_PASSWORD) {
+                if (errorMsg) errorMsg.classList.add('hidden');
                 goToPage3();
             } else {
-                errorMsg.classList.remove('hidden');
-                const inputField = document.getElementById('passwordInput');
-                inputField.classList.add('border-rose-500');
-                setTimeout(() => inputField.classList.remove('border-rose-500'), 1000);
+                if (errorMsg) errorMsg.classList.remove('hidden');
+                if (pinCard) {
+                    pinCard.classList.add('shake-error');
+                    setTimeout(() => pinCard.classList.remove('shake-error'), 500);
+                }
+                // Сброс индикаторов при неверном вводе
+                setTimeout(() => {
+                    currentPin = '';
+                    updatePinDisplay();
+                }, 400);
             }
         }
 
